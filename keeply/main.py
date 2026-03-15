@@ -201,12 +201,20 @@ def search_by_tag(args, notebook: NoteBook):
     return format_notes_table(results)
 
 @input_error
-def sort_notes_by_tags(notebook: NoteBook):
+def sort_notes_by_tags(args, notebook: NoteBook):
     sorted_notes = notebook.sort_by_tags()
     if not sorted_notes:
         return "📭 Список нотаток порожній."
     # return "\n".join(str(note) for note in sorted_notes)
-    return format_notes_table(sorted_notes)
+    page = 1
+    if args:
+        # all 2
+        if len(args) != 1:
+            raise ValueError("Usage: all [page]")
+        if not args[0].isdigit():
+            raise ValueError("Enter page number (e.g., all 2).")
+        page = int(args[0])
+    return format_notes_table(sorted_notes, page=page, page_size=5)
 
 @input_error
 def edit_note(args, notebook: NoteBook):
@@ -310,7 +318,7 @@ def main():
         elif command == "search-tag":
             print(search_by_tag(args, notes_book))
         elif command == "sort-tags":
-            print(sort_notes_by_tags(notes_book))
+            print(sort_notes_by_tags(args, notes_book))
         elif command == "edit-note":
             print(edit_note(args, notes_book))
         elif command == "delete-note":
