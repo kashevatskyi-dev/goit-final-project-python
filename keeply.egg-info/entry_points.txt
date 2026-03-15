@@ -1,0 +1,2 @@
+[console_scripts]
+keeply = keeply.main:main
