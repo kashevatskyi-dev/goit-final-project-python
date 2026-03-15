@@ -1,0 +1,21 @@
+# Віртуальне середовище
+venv/
+
+# Кеш та скомпільовані файли Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Файли збірки пакета
+*.egg-info/
+keeply.egg-info/
+
+# Налаштування IDE (PyCharm / VS Code)
+.idea/
+.vscode/
+
+# Локальні бази даних (щоб тестові дані не летіли на GitHub)
+*.pkl
+contacts.pkl
+notes.pkl
