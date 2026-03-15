@@ -117,7 +117,7 @@ def format_notes_table(notes, page: int = 1, page_size: int = 10, text_limit: in
         return text[: text_limit - 1] + "…"
 
     def tag_to_str(tag) -> str:
-        # якщо Tag має .value — беремо його, інакше str(tag)
+        # якщо Tag має.value — беремо його, інакше str(tag)
         if hasattr(tag, "value") and not callable(getattr(tag, "value")):
             return str(getattr(tag, "value"))
         return str(tag)

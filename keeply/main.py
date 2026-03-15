@@ -1,10 +1,17 @@
+from pathlib import Path
 from keeply.models_contacts import AddressBook, Record
 from keeply.models_notes import NoteBook, Note
 from keeply.storage import save_data, load_data
 from keeply.utils import input_error, get_closest_match
 from keeply.tables import format_contacts_table, format_notes_table
-CONTACTS_FILE = "contacts.pkl"
-NOTES_FILE = "notes.pkl"
+
+# Визначаємо домашню директорію користувача та створюємо приховану папку .keeply
+STORAGE_DIR = Path.home() / ".keeply"
+STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+
+# Вказуємо повні шляхи до файлів даних
+CONTACTS_FILE = STORAGE_DIR / "contacts.pkl"
+NOTES_FILE = STORAGE_DIR / "notes.pkl"
 
 # Повний список валідних команд для інтелектуального вгадування
 VALID_COMMANDS = [
@@ -58,7 +65,7 @@ def show_phone(args, book: AddressBook):
 def show_all_contacts(args, book: AddressBook):
     if not book.data:
         return "📭 Адресна книга порожня."
-    #return "\n".join(str(record) for record in book.data.values())
+    # return "\n".join(str(record) for record in book.data.values())
     page = 1
     if args:
         # all 2
@@ -134,7 +141,7 @@ def search_contact(args, book: AddressBook):
     
     if not results:
         return f"🔍 Контактів за запитом '{query}' не знайдено."
-    #return "\n".join(str(r) for r in results)
+    # return "\n".join(str(r) for r in results)
     return format_contacts_table(results)
 
 @input_error
@@ -164,7 +171,7 @@ def add_note(args, notebook: NoteBook):
 def show_all_notes(args, notebook: NoteBook):
     if not notebook.data:
         return "📭 Зошит з нотатками порожній."
-    #return "\n".join(str(note) for note in notebook.data.values())
+    # return "\n".join(str(note) for note in notebook.data.values())
     page = 1
     if args:
         # all 2
@@ -181,7 +188,7 @@ def search_note(args, notebook: NoteBook):
     results = notebook.search_by_text(query)
     if not results:
         return f"🔍 Нотаток за запитом '{query}' не знайдено."
-    #return "\n".join(str(note) for note in results)
+    # return "\n".join(str(note) for note in results)
     return format_notes_table(results)
 
 @input_error
@@ -190,7 +197,7 @@ def search_by_tag(args, notebook: NoteBook):
     results = notebook.search_by_tag(tag)
     if not results:
         return f"🔍 Нотаток з тегом #{tag} не знайдено."
-    #return "\n".join(str(note) for note in results)
+    # return "\n".join(str(note) for note in results)
     return format_notes_table(results)
 
 @input_error
@@ -198,7 +205,7 @@ def sort_notes_by_tags(notebook: NoteBook):
     sorted_notes = notebook.sort_by_tags()
     if not sorted_notes:
         return "📭 Список нотаток порожній."
-    #return "\n".join(str(note) for note in sorted_notes)
+    # return "\n".join(str(note) for note in sorted_notes)
     return format_notes_table(sorted_notes)
 
 @input_error

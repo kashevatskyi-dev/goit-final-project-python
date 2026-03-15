@@ -1,7 +1,7 @@
 import difflib
 
 def input_error(func):
-    #Декоратор для перехоплення та обробки помилок вводу.
+    # Декоратор для перехоплення та обробки помилок вводу.
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
@@ -16,7 +16,7 @@ def input_error(func):
     return inner
 
 def get_closest_match(command, valid_commands):
-    #Знаходить найближчу команду зі списку валідних команд, якщо користувач зробив одруківку (наприклад 'ad' замість 'add').
+    # Знаходить найближчу команду зі списку валідних команд, якщо користувач зробив одруківку (наприклад 'ad' замість 'add').
     # difflib.get_close_matches повертає список співпадінь. 
     # cutoff=0.6 означає, що слова мають бути схожі мінімум на 60%.
     matches = difflib.get_close_matches(command, valid_commands, n=1, cutoff=0.6)
